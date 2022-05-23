@@ -11,7 +11,13 @@ from PIL import Image
 from constants import *
 
 
-def filter_images(images_URL, tmp_images_path=tmp_img_path, image_path=filtered_image_path, thresholdWidth=thresholdWidth, thresholdHeight=thresholdHeight):
+def filter_images(
+    images_URL,
+    tmp_images_path=tmp_img_path,
+    image_path=filtered_image_path,
+    thresholdWidth=thresholdWidth,
+    thresholdHeight=thresholdHeight,
+):
     _ = download_imagesURL(images_URL, tmp_images_path)
     path = handle_dir_creation(image_path)
     # iterate over all the images
@@ -49,7 +55,7 @@ def download_imagesURL(images_URL, tmp_images_path):
         r = requests.get(url, stream=True)
         if r.status_code == 200:
             # Try dir creation
-            with open(tmp_path / filename, 'wb') as f:
+            with open(tmp_path / filename, "wb") as f:
                 r.raw.decode_content = True
                 shutil.copyfileobj(r.raw, f)
         else:

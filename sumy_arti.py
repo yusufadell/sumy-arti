@@ -10,8 +10,10 @@ from sumy.summarizers.luhn import LuhnSummarizer as Summarizer
 from wand.color import Color
 from wand.font import Font
 from wand.image import Image
+
 from constants import *
-from utils import filter_images, get_highquality_image
+from utils import filter_images
+from utils import get_highquality_image
 
 chosen_image = get_highquality_image()
 
@@ -19,8 +21,8 @@ chosen_image = get_highquality_image()
 def parse_summerize_article(url):
     """parse_summerize_article parse_summerize_article parses a given URL and returns a summary
 
-    :param url: article URL to parse and summarize 
-    :type url: string 
+    :param url: article URL to parse and summarize
+    :type url: string
     :return: list object with SENTENCES_COUNT number of sentences from the article summary
     :rtype: list
     """
@@ -163,19 +165,20 @@ def upload_to_instagram(image_path):
     upload_url = "https://api.instagram.com/v1/media/upload"
     payload = {"access_token": os.environ.get("INSTAGRAM_ACCESS_TOKEN")}
     files = {"photo": image_data}
-    response = requests.post(upload_url,
-                             data=payload,
-                             files=files)
+    response = requests.post(upload_url, data=payload, files=files)
     if response.status_code == 200:
         # extract the image id
         image_id = response.json()["data"]["id"]
         # post the image to an account
         post_url = "https://api.instagram.com/v1/media/{}/comments".format(
             image_id)
-        payload = {"access_token": os.environ.get("INSTAGRAM_ACCESS_TOKEN"),
-                   "text": "Thank you for reading this article. I hope you enjoyed it. #wired #cygnus #quantum #space #science"}
-        response = requests.post(post_url,
-                                 data=payload)
+        payload = {
+            "access_token":
+            os.environ.get("INSTAGRAM_ACCESS_TOKEN"),
+            "text":
+            "Thank you for reading this article. I hope you enjoyed it. #wired #cygnus #quantum #space #science",
+        }
+        response = requests.post(post_url, data=payload)
         if response.status_code == 200:
             print("Image uploaded successfully")
         else:
