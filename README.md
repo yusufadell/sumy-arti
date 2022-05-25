@@ -23,7 +23,10 @@ The easiest way to get started is to execute the `sumy-arti` file.
 
 ```shell
 python sumy-arti.py
+<<<<<<< HEAD
 
+=======
+>>>>>>> 25cdd1c (:memo: Project Motivation - Installation - Usage)
 ```
 
 This will download the article and generate an image.
