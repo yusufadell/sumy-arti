@@ -1,2 +1,4 @@
 sumy
 newspaper3k
+wand
+requests
