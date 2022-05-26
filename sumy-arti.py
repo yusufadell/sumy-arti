@@ -10,7 +10,7 @@ article_URL = "https://www.wired.com/story/researchers-made-ultracold-quantum-bu
 image_URL = "https://media.wired.com/photos/628d7932616e0f74943c26c4/master/w_120,c_limit/cal-cygnus-scaled-science.jpg"
 
 
-def parse_summerize_article(url):    
+def parse_summerize_article(url):
     article = Article(url)
     article.download()
     article.parse()
