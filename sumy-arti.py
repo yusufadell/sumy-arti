@@ -22,8 +22,7 @@ def parse_summerize_article(url):
     stemmer = Stemmer(LANGUAGE)
     summarizer = Summarizer(stemmer)
 
-    return [sentence._text for sentence in summarizer(
-        parser.document, SENTENCES_COUNT)]
+    return [sentence._text for sentence in summarizer(parser.document, SENTENCES_COUNT)]
 
 
 CAPTION = parse_summerize_article(article_URL)
@@ -42,7 +41,7 @@ with Image(blob=image_blob.content) as img:
 
 width = size[0]
 height = size[1]
-aspect = width/height
+aspect = width / height
 
 # ideal Height, ideal Width
 dims = (1080, 1920)
@@ -54,7 +53,7 @@ def crop_edges(ideal_aspect, width, height):
     new_width = int(ideal_aspect * height)
     resize = (
         (0, 0, int(new_width), int(height)),
-        (int(width-new_width), 0, int(width), int(height))
+        (int(width - new_width), 0, int(width), int(height)),
     )
     return resize
 
@@ -63,7 +62,7 @@ def crop_top_bottom(ideal_aspect, width, height):
     new_height = int(width / ideal_aspect)
     resize = (
         (0, 0, int(width), int(new_height)),
-        (0, int(height-new_height), int(width), int(height))
+        (0, int(height - new_height), int(width), int(height)),
     )
 
     return resize
@@ -81,8 +80,8 @@ assert resize
 
 with Image(blob=image_blob.content) as img:
     img.crop(*resize[0])
-    img.save(filename='assets/cropped_1.jpg')
+    img.save(filename="assets/cropped_1.jpg")
 
 with Image(blob=image_blob.content) as img:
     img.crop(*resize[1])
-    img.save(filename='assets/cropped_2.jpg')
+    img.save(filename="assets/cropped_2.jpg")
