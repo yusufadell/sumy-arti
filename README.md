@@ -23,13 +23,21 @@ The easiest way to get started is to execute the `sumy-arti` file.
 
 ```shell
 python sumy-arti.py
-<<<<<<< HEAD
-
-=======
->>>>>>> 25cdd1c (:memo: Project Motivation - Installation - Usage)
 ```
 
 This will download the article and generate an image.
+
+## How does it work?
+
+The script takes an article and generates an image from it.
+
+The article is downloaded from the url given by the user.
+
+The article is parsed and the most important sentences are extracted.
+
+The sentences are then overlayed on a cropped images.
+
+The image is saved in the `images` folder.
 
 ## Authors
 
@@ -44,9 +52,3 @@ This software is licensed under the MIT License.
 ## Code
 
 - [Repository](https://github.com/yusufadell/sumy-arti)
-
-## License
-
-Copyright (c) 2021-2022 Yusuf Adel.
-
-This software is licensed under the [MIT license](https://opensource.org/licenses/MIT).
