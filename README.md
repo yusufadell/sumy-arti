@@ -37,7 +37,7 @@ The article is parsed and the most important sentences are extracted.
 
 The sentences are then overlayed on a cropped images.
 
-[Image](https://raw.githubusercontent.com/sumy-arti/sumy-arti/master/images/cropped_image_sample.png)
+![Cropped Images from original](images/cropped_image_sample.png "Cropped Images From Edges - Bottom - Top")
 
 **The image is saved in the `images` folder.**
 
