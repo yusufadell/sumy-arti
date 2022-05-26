@@ -37,7 +37,9 @@ The article is parsed and the most important sentences are extracted.
 
 The sentences are then overlayed on a cropped images.
 
-The image is saved in the `images` folder.
+[Image](https://raw.githubusercontent.com/sumy-arti/sumy-arti/master/images/cropped_image_sample.png)
+
+**The image is saved in the `images` folder.**
 
 ## Authors
 
