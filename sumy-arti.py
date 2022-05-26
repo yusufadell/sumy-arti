@@ -22,7 +22,10 @@ def parse_summerize_article(url):
     stemmer = Stemmer(LANGUAGE)
     summarizer = Summarizer(stemmer)
 
-    return [sentence._text for sentence in summarizer(parser.document, SENTENCES_COUNT)]
+    return [
+        sentence._text
+        for sentence in summarizer(parser.document, SENTENCES_COUNT)
+    ]
 
 
 CAPTION = parse_summerize_article(article_URL)
@@ -34,7 +37,6 @@ def get_image_blob(url):
 
 
 image_blob = get_image_blob(image_URL)
-
 
 with Image(blob=image_blob.content) as img:
     size = img.size
