@@ -86,3 +86,8 @@ with Image(blob=image_blob.content) as img:
 with Image(blob=image_blob.content) as img:
     img.crop(*resize[1])
     img.save(filename='assets/cropped_2.jpg')
+
+
+# TODO: Overlaying Text on Images
+
+# TODO: Posting the Story on Instagram manually (not using the API)
