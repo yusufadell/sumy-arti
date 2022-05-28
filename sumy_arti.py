@@ -31,11 +31,7 @@ def parse_summerize_article(url):
     return [
         sentence._text
         for sentence in summarizer(parser.document, SENTENCES_COUNT)
-<<<<<<< HEAD
-    ]
-=======
     ], list(article.images)
->>>>>>> dd016ebcdb941e932b7062c21294a3705ea842dc
 
 
 CAPTION, images_URLs = parse_summerize_article(article_URL)
