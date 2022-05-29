@@ -35,7 +35,7 @@ The article is downloaded from the url given by the user.
 
 The article is parsed and the most important sentences are extracted.
 
-The sentences are then overlayed on a cropped images.
+The sentences are then overlaid on a cropped images.
 
 ![Cropped Images from original](assets/images/cropped_image_sample.png "Cropped Images From Edges - Bottom - Top")
 
