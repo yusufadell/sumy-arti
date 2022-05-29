@@ -12,7 +12,8 @@ def filterImages(images_URL, thresholdWidth, thresholdHeight):
 
     # Defining images array for
     # identifying only image files
-    valid_images = (".jpg", ".gif", ".png", ".tga", ".jpeg", ".PNG", ".JPG", ".JPEG")
+    valid_images = (".jpg", ".gif", ".png", ".tga", ".jpeg", ".PNG", ".JPG",
+                    ".JPEG")
     imgs_URLs = [img for img in images_URL if img.endswith(valid_images)]
     imgs_PATH = "assets/tmp/"
 
@@ -61,6 +62,5 @@ urls = [
     "https://www.wired.com/verso/static/wired/assets/logo-header.a7598835a549cb7d5ce024ef0710935927a034f9.svg",
     "https://www.wallpapermaiden.com/image/2016/09/02/google-logo-opening-doors-colorful-stripes-technology-5335.jpg",
 ]
-
 
 filterImages(1000, 1000)
