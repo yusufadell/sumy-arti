@@ -28,15 +28,8 @@ def parse_summerize_article(url):
     stemmer = Stemmer(LANGUAGE)
     summarizer = Summarizer(stemmer)
 
-<<<<<<< HEAD:sumy-arti.py
-    return [
-        sentence._text
-        for sentence in summarizer(parser.document, SENTENCES_COUNT)
-    ]
-=======
     return [sentence._text for sentence in summarizer(
         parser.document, SENTENCES_COUNT)], list(article.images)
->>>>>>> refactoring:sumy_arti.py
 
 
 CAPTION, images_URLs = parse_summerize_article(article_URL)
@@ -90,13 +83,6 @@ assert resize
 
 with Image(blob=image_blob.content) as img:
     img.crop(*resize[0])
-<<<<<<< HEAD:sumy-arti.py
-    img.save(filename="assets/cropped_1.jpg")
-
-with Image(blob=image_blob.content) as img:
-    img.crop(*resize[1])
-    img.save(filename="assets/cropped_2.jpg")
-=======
     img.save(filename='assets/images/cropped_1.jpg')
 
 with Image(blob=image_blob.content) as img:
@@ -134,4 +120,3 @@ with Image(blob=image_blob.content) as canvas:
 
 
 # TODO: Posting the Story on Instagram manually (not using the API)
->>>>>>> refactoring:sumy_arti.py
