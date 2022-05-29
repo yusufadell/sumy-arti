@@ -1,7 +1,6 @@
 # Python3 program to Filtering Images
 # based on Size Attributes
 import datetime
-import os
 import os.path
 import shutil
 
