@@ -27,12 +27,10 @@ def parse_summerize_article(url):
     stemmer = Stemmer(LANGUAGE)
     summarizer = Summarizer(stemmer)
 
-
     return [
         sentence._text
         for sentence in summarizer(parser.document, SENTENCES_COUNT)
     ], list(article.images)
-
 
 
 CAPTION, images_URLs = parse_summerize_article(article_URL)
