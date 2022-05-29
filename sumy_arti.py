@@ -15,6 +15,13 @@ image_URL = "https://i.imgur.com/YobrZ8r.png"
 
 
 def parse_summerize_article(url):
+    """parse_summerize_article parse_summerize_article parses a given URL and returns a summary
+
+    :param url: article URL to parse and summarize 
+    :type url: string 
+    :return: list object with SENTENCES_COUNT number of sentences from the article summary
+    :rtype: list
+    """
     article = Article(url)
     article.download()
     article.parse()
@@ -51,16 +58,38 @@ ideal_aspect = dims[0] / dims[1]
 
 
 def crop_edges(ideal_aspect, width, height):
-    # crop the left and right edges:
-    new_width = int(ideal_aspect * height)
+    """crop_edges crops the image to the ideal aspect ratio
+
+    :param ideal_aspect: ideal aspect ratio for the image
+    :type ideal_aspect: float
+    :param width: width of the image
+    :type width: int
+    :param height: height of the image
+    :type height: int
+    :return: list of tuples with the coordinates to crop the image
+    :rtype: list
+    """
+    new_width = int(height * ideal_aspect)
     resize = (
         (0, 0, int(new_width), int(height)),
         (int(width - new_width), 0, int(width), int(height)),
     )
+
     return resize
 
 
 def crop_top_bottom(ideal_aspect, width, height):
+    """crop_top_bottom _summary_crop_top_bottom crops the image to the ideal aspect ratio
+
+    :param ideal_aspect: ideal aspect ratio for the image
+    :type ideal_aspect: float
+    :param width: width of the image
+    :type width: int
+    :param height: height of the image
+    :type height: int
+    :return: list of tuples with the coordinates to crop the image
+    :rtype: list
+    """
     new_height = int(width / ideal_aspect)
     resize = (
         (0, 0, int(width), int(new_height)),
@@ -71,6 +100,17 @@ def crop_top_bottom(ideal_aspect, width, height):
 
 
 def crop_image_handler(aspect, width, height):
+    """crop_image_handler _summary_crop_image_handler crops the image to the ideal aspect ratio
+
+    :param aspect: ideal aspect ratio for the image
+    :type aspect: float
+    :param width: width of the image
+    :type width: int
+    :param height: height of the image
+    :type height: int
+    :return: list of tuples with the coordinates to crop the image
+    :rtype: list
+    """
     if aspect > ideal_aspect:
         return crop_edges(ideal_aspect, width, height)
     else:
@@ -89,6 +129,7 @@ with Image(blob=image_blob.content) as img:
     img.crop(*resize[1])
     img.save(filename="assets/images/cropped_2.jpg")
 
+# Overlay text from CAPTION on the image and save.
 with Image(blob=image_blob.content) as canvas:
     canvas.crop(*resize[0])
     canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
