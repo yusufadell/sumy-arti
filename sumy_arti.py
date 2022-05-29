@@ -5,7 +5,6 @@ from sumy.nlp.tokenizers import Tokenizer
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.summarizers.luhn import LuhnSummarizer as Summarizer
 from wand.color import Color
-
 from wand.font import Font
 from wand.image import Image
 
@@ -27,12 +26,10 @@ def parse_summerize_article(url):
     stemmer = Stemmer(LANGUAGE)
     summarizer = Summarizer(stemmer)
 
-
     return [
         sentence._text
         for sentence in summarizer(parser.document, SENTENCES_COUNT)
     ], list(article.images)
-
 
 
 CAPTION, images_URLs = parse_summerize_article(article_URL)
@@ -87,7 +84,6 @@ with Image(blob=image_blob.content) as img:
     img.crop(*resize[0])
 
     img.save(filename="assets/images/cropped_1.jpg")
-
 
 with Image(blob=image_blob.content) as img:
     img.crop(*resize[1])
