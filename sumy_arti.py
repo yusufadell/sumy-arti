@@ -26,8 +26,9 @@ def parse_summerize_article(url):
     stemmer = Stemmer(LANGUAGE)
     summarizer = Summarizer(stemmer)
 
-    return [sentence._text for sentence in summarizer(
-        parser.document, SENTENCES_COUNT)], list(article.images)
+    return [
+        sentence._text for sentence in summarizer(parser.document, SENTENCES_COUNT)
+    ], list(article.images)
 
 
 CAPTION, images_URLs = parse_summerize_article(article_URL)
@@ -81,40 +82,44 @@ assert resize
 
 with Image(blob=image_blob.content) as img:
     img.crop(*resize[0])
-    img.save(filename='assets/images/cropped_1.jpg')
+    img.save(filename="assets/images/cropped_1.jpg")
 
 with Image(blob=image_blob.content) as img:
     img.crop(*resize[1])
-    img.save(filename='assets/images/cropped_2.jpg')
+    img.save(filename="assets/images/cropped_2.jpg")
 
 
 with Image(blob=image_blob.content) as canvas:
     canvas.crop(*resize[0])
-    canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
-                       size=53,
-                       color=Color('white'))
-    caption_width = int(canvas.width/1.2)
-    margin_left = int((canvas.width-caption_width)/2)
+    canvas.font = Font("assets/fonts/Roboto-Regular.ttf", size=53, color=Color("white"))
+    caption_width = int(canvas.width / 1.2)
+    margin_left = int((canvas.width - caption_width) / 2)
     margin_top = int(30)
-    canvas.caption(CAPTION[0], gravity='north',
-                   width=caption_width, left=margin_left,
-                   top=margin_top)
+    canvas.caption(
+        CAPTION[0],
+        gravity="north",
+        width=caption_width,
+        left=margin_left,
+        top=margin_top,
+    )
     canvas.format = "jpg"
-    canvas.save(filename='assets/images/text_overlayed_1.jpg')
+    canvas.save(filename="assets/images/text_overlayed_1.jpg")
 
 with Image(blob=image_blob.content) as canvas:
     canvas.crop(*resize[1])
-    canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
-                       size=53,
-                       color=Color('white'))
-    caption_width = int(canvas.width/1.2)
-    margin_left = int((canvas.width-caption_width)/2)
+    canvas.font = Font("assets/fonts/Roboto-Regular.ttf", size=53, color=Color("white"))
+    caption_width = int(canvas.width / 1.2)
+    margin_left = int((canvas.width - caption_width) / 2)
     margin_top = int(30)
-    canvas.caption(CAPTION[1], gravity='north',
-                   width=caption_width, left=margin_left,
-                   top=margin_top)
+    canvas.caption(
+        CAPTION[1],
+        gravity="north",
+        width=caption_width,
+        left=margin_left,
+        top=margin_top,
+    )
     canvas.format = "jpg"
-    canvas.save(filename='assets/images/text_overlayed_2.jpg')
+    canvas.save(filename="assets/images/text_overlayed_2.jpg")
 
 
 # TODO: Posting the Story on Instagram manually (not using the API)
