@@ -28,8 +28,7 @@ def parse_summerize_article(url):
     summarizer = Summarizer(stemmer)
 
     return [
-        sentence._text
-        for sentence in summarizer(parser.document, SENTENCES_COUNT)
+        sentence._text for sentence in summarizer(parser.document, SENTENCES_COUNT)
     ], list(article.images)
 
 
@@ -93,9 +92,7 @@ with Image(blob=image_blob.content) as img:
 
 with Image(blob=image_blob.content) as canvas:
     canvas.crop(*resize[0])
-    canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
-                       size=53,
-                       color=Color("white"))
+    canvas.font = Font("assets/fonts/Roboto-Regular.ttf", size=53, color=Color("white"))
     caption_width = int(canvas.width / 1.2)
     margin_left = int((canvas.width - caption_width) / 2)
     margin_top = int(30)
@@ -111,9 +108,7 @@ with Image(blob=image_blob.content) as canvas:
 
 with Image(blob=image_blob.content) as canvas:
     canvas.crop(*resize[1])
-    canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
-                       size=53,
-                       color=Color("white"))
+    canvas.font = Font("assets/fonts/Roboto-Regular.ttf", size=53, color=Color("white"))
     caption_width = int(canvas.width / 1.2)
     margin_left = int((canvas.width - caption_width) / 2)
     margin_top = int(30)
