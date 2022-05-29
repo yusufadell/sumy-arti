@@ -1,3 +1,4 @@
+import random
 import requests
 from newspaper import Article
 from sumy.nlp.stemmers import Stemmer
@@ -40,7 +41,6 @@ def parse_summerize_article(url):
 
 
 CAPTION, images_URLs = parse_summerize_article(article_URL)
-
 assert CAPTION
 
 image_blob = requests.get(image_URL)
@@ -139,7 +139,7 @@ with Image(blob=image_blob.content) as canvas:
     margin_left = int((canvas.width - caption_width) / 2)
     margin_top = int(30)
     canvas.caption(
-        CAPTION[0],
+        random.choice(CAPTION),
         gravity="north",
         width=caption_width,
         left=margin_left,
@@ -157,7 +157,7 @@ with Image(blob=image_blob.content) as canvas:
     margin_left = int((canvas.width - caption_width) / 2)
     margin_top = int(30)
     canvas.caption(
-        CAPTION[1],
+        random.choice(CAPTION),
         gravity="north",
         width=caption_width,
         left=margin_left,
