@@ -77,4 +77,10 @@ def uniqe_name(url):
     return filename
 
 
+def get_highquality_image(image_path=filtered_image_path):
+    path = handle_dir_creation(image_path)
+    # check if dir is empty
+    images = list(path.absolute().iterdir())
+    return backup_image if len(images) == 0 else random.choice(images)
+
 
