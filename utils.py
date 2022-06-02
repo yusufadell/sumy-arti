@@ -59,6 +59,15 @@ def download_imagesURL(images_URL, tmp_images_path):
     return [f for f in tmp_path.iterdir() if f.name.endswith(valid_images)]
 
 
+def handle_dir_creation(path):
+    p = Path(path)
+    try:
+        p.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        print(f"Creation of the directory {path} failed")
+    else:
+        print(f"Successfully created the directory {path} ")
+    return p
 
 
 
