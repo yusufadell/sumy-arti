@@ -35,3 +35,31 @@ def filter_images(images_URL, tmp_images_path=tmp_img_path, image_path=filtered_
                 img.unlink()
         except IOError:
             print(f"Cannot open image: {img}")
+
+
+def download_imagesURL(images_URL, tmp_images_path):
+    # Defining images array for
+    # identifying only image files
+    imgs_URLs = [img for img in images_URL if img.endswith(valid_images)]
+    # download valid_images image from url and save it to disk
+    tmp_path = handle_dir_creation(tmp_images_path)
+
+    for url in imgs_URLs:
+        filename = uniqe_name(url)
+        r = requests.get(url, stream=True)
+        if r.status_code == 200:
+            # Try dir creation
+            with open(tmp_path / filename, 'wb') as f:
+                r.raw.decode_content = True
+                shutil.copyfileobj(r.raw, f)
+        else:
+            print("Error downloading image")
+
+    # return the list of images downloaded
+    return [f for f in tmp_path.iterdir() if f.name.endswith(valid_images)]
+
+
+
+
+
+
