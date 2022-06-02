@@ -70,5 +70,11 @@ def handle_dir_creation(path):
     return p
 
 
+def uniqe_name(url):
+    unique_imagename = str(uuid.uuid4())
+    basename = url.split("/")[-1]
+    filename = "_".join([unique_imagename, basename])
+    return filename
+
 
 
