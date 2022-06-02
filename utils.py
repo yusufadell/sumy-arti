@@ -84,3 +84,10 @@ def get_highquality_image(image_path=filtered_image_path):
     return backup_image if len(images) == 0 else random.choice(images)
 
 
+# choose overlayed text depending on the image color (black or white)
+def choose_text_color(image_path):
+    with Image(filename=image_path) as img:
+        if img.color_histogram()[0][0] > img.color_histogram()[0][1]:
+            return "black"
+        else:
+            return "white"
