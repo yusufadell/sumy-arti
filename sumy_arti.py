@@ -1,4 +1,6 @@
+import os
 import random
+
 import requests
 from newspaper import Article
 from sumy.nlp.stemmers import Stemmer
@@ -8,11 +10,10 @@ from sumy.summarizers.luhn import LuhnSummarizer as Summarizer
 from wand.color import Color
 from wand.font import Font
 from wand.image import Image
+from constants import *
+from utils import filter_images, get_highquality_image
 
-article_URL = "https://www.wired.com/story/researchers-made-ultracold-quantum-bubbles-on-the-space-station/"
-
-# image_URL = "https://media.wired.com/photos/628d7932616e0f74943c26c4/master/w_120,c_limit/cal-cygnus-scaled-science.jpg"
-image_URL = "https://i.imgur.com/YobrZ8r.png"
+chosen_image = get_highquality_image()
 
 
 def parse_summerize_article(url):
@@ -43,18 +44,12 @@ def parse_summerize_article(url):
 CAPTION, images_URLs = parse_summerize_article(article_URL)
 assert CAPTION
 
-image_blob = requests.get(image_URL)
-
-with Image(blob=image_blob.content) as img:
+with Image(filename=chosen_image) as img:
     size = img.size
 
 width = size[0]
 height = size[1]
 aspect = width / height
-
-# ideal Height, ideal Width
-dims = (1080, 1920)
-ideal_aspect = dims[0] / dims[1]
 
 
 def crop_edges(ideal_aspect, width, height):
@@ -120,50 +115,74 @@ def crop_image_handler(aspect, width, height):
 resize = crop_image_handler(aspect, width, height)
 assert resize
 
-with Image(blob=image_blob.content) as img:
+with Image(filename=chosen_image) as img:
     img.crop(*resize[0])
 
     img.save(filename="assets/images/cropped_1.jpg")
 
-with Image(blob=image_blob.content) as img:
+with Image(filename=chosen_image) as img:
     img.crop(*resize[1])
     img.save(filename="assets/images/cropped_2.jpg")
 
+
 # Overlay text from CAPTION on the image and save.
-with Image(blob=image_blob.content) as canvas:
-    canvas.crop(*resize[0])
-    canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
-                       size=53,
-                       color=Color("white"))
-    caption_width = int(canvas.width / 1.2)
-    margin_left = int((canvas.width - caption_width) / 2)
-    margin_top = int(30)
-    canvas.caption(
-        random.choice(CAPTION),
-        gravity="north",
-        width=caption_width,
-        left=margin_left,
-        top=margin_top,
-    )
-    canvas.format = "jpg"
-    canvas.save(filename="assets/images/text_overlayed_1.jpg")
+def overlay_text(CAPTION, filename, resize, image_path):
+    with Image(filename=filename) as canvas:
+        canvas.crop(*resize)
+        canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
+                           size=53,
+                           color=Color("white"))
+        caption_width = int(canvas.width / 1.2)
+        margin_left = int((canvas.width - caption_width) / 2)
+        margin_top = int(30)
+        canvas.caption(
+            random.choice(CAPTION),
+            gravity="north",
+            width=caption_width,
+            left=margin_left,
+            top=margin_top,
+        )
+        canvas.format = "jpg"
+        canvas.save(filename=image_path)
 
-with Image(blob=image_blob.content) as canvas:
-    canvas.crop(*resize[1])
-    canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
-                       size=53,
-                       color=Color("white"))
-    caption_width = int(canvas.width / 1.2)
-    margin_left = int((canvas.width - caption_width) / 2)
-    margin_top = int(30)
-    canvas.caption(
-        random.choice(CAPTION),
-        gravity="north",
-        width=caption_width,
-        left=margin_left,
-        top=margin_top,
-    )
-    canvas.format = "jpg"
-    canvas.save(filename="assets/images/text_overlayed_2.jpg")
 
-# TODO: Posting the Story on Instagram manually (not using the API)
+overlay_text(CAPTION, chosen_image, resize[0], image1_path)  # crop_edges
+overlay_text(CAPTION, chosen_image, resize[1], image2_path)  # crop_top_bottom
+
+
+def upload_to_instagram(image_path):
+    """upload_to_instagram _summary_upload_to_instagram uploads the image to instagram
+    :param image_path: path to the image
+    :type image_path: string
+    :return: None
+    :rtype: None
+    """
+    with open(image_path, "rb") as image_file:
+        image_data = image_file.read()
+    image_name = image_path.split("/")[-1]
+    upload_url = "https://api.instagram.com/v1/media/upload"
+    payload = {"access_token": os.environ.get("INSTAGRAM_ACCESS_TOKEN")}
+    files = {"photo": image_data}
+    response = requests.post(upload_url,
+                             data=payload,
+                             files=files)
+    if response.status_code == 200:
+        # extract the image id
+        image_id = response.json()["data"]["id"]
+        # post the image to an account
+        post_url = "https://api.instagram.com/v1/media/{}/comments".format(
+            image_id)
+        payload = {"access_token": os.environ.get("INSTAGRAM_ACCESS_TOKEN"),
+                   "text": "Thank you for reading this article. I hope you enjoyed it. #wired #cygnus #quantum #space #science"}
+        response = requests.post(post_url,
+                                 data=payload)
+        if response.status_code == 200:
+            print("Image uploaded successfully")
+        else:
+            print("Something went wrong when uploading the image")
+    else:
+        print("Something went wrong when uploading the image")
+
+
+def main():
+    filter_images(images_URLs)
