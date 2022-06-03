@@ -10,6 +10,7 @@ from sumy.summarizers.luhn import LuhnSummarizer as Summarizer
 from wand.color import Color
 from wand.font import Font
 from wand.image import Image
+
 from constants import *
 from utils import filter_images, get_highquality_image
 
