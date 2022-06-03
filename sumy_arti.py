@@ -11,10 +11,7 @@ from wand.image import Image
 from constants import *
 from utils import filter_images, get_highquality_image
 
-article_URL = "https://www.wired.com/story/researchers-made-ultracold-quantum-bubbles-on-the-space-station/"
-
-# image_URL = "https://media.wired.com/photos/628d7932616e0f74943c26c4/master/w_120,c_limit/cal-cygnus-scaled-science.jpg"
-image_URL = "https://i.imgur.com/YobrZ8r.png"
+chosen_image = get_highquality_image()
 
 
 def parse_summerize_article(url):
@@ -45,9 +42,7 @@ def parse_summerize_article(url):
 CAPTION, images_URLs = parse_summerize_article(article_URL)
 assert CAPTION
 
-image_blob = requests.get(image_URL)
-
-with Image(blob=image_blob.content) as img:
+with Image(filename=chosen_image) as img:
     size = img.size
 
 width = size[0]
@@ -122,12 +117,12 @@ def crop_image_handler(aspect, width, height):
 resize = crop_image_handler(aspect, width, height)
 assert resize
 
-with Image(blob=image_blob.content) as img:
+with Image(filename=chosen_image) as img:
     img.crop(*resize[0])
 
     img.save(filename="assets/images/cropped_1.jpg")
 
-with Image(blob=image_blob.content) as img:
+with Image(filename=chosen_image) as img:
     img.crop(*resize[1])
     img.save(filename="assets/images/cropped_2.jpg")
 
