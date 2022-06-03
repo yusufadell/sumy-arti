@@ -1,4 +1,6 @@
+import os
 import random
+
 import requests
 from newspaper import Article
 from sumy.nlp.stemmers import Stemmer
@@ -48,10 +50,6 @@ with Image(filename=chosen_image) as img:
 width = size[0]
 height = size[1]
 aspect = width / height
-
-# ideal Height, ideal Width
-dims = (1080, 1920)
-ideal_aspect = dims[0] / dims[1]
 
 
 def crop_edges(ideal_aspect, width, height):
@@ -152,7 +150,39 @@ overlay_text(CAPTION, chosen_image, resize[0], image1_path)  # crop_edges
 overlay_text(CAPTION, chosen_image, resize[1], image2_path)  # crop_top_bottom
 
 
-# TODO: Posting the Story on Instagram manually (not using the API)
+def upload_to_instagram(image_path):
+    """upload_to_instagram _summary_upload_to_instagram uploads the image to instagram
+    :param image_path: path to the image
+    :type image_path: string
+    :return: None
+    :rtype: None
+    """
+    with open(image_path, "rb") as image_file:
+        image_data = image_file.read()
+    image_name = image_path.split("/")[-1]
+    upload_url = "https://api.instagram.com/v1/media/upload"
+    payload = {"access_token": os.environ.get("INSTAGRAM_ACCESS_TOKEN")}
+    files = {"photo": image_data}
+    response = requests.post(upload_url,
+                             data=payload,
+                             files=files)
+    if response.status_code == 200:
+        # extract the image id
+        image_id = response.json()["data"]["id"]
+        # post the image to an account
+        post_url = "https://api.instagram.com/v1/media/{}/comments".format(
+            image_id)
+        payload = {"access_token": os.environ.get("INSTAGRAM_ACCESS_TOKEN"),
+                   "text": "Thank you for reading this article. I hope you enjoyed it. #wired #cygnus #quantum #space #science"}
+        response = requests.post(post_url,
+                                 data=payload)
+        if response.status_code == 200:
+            print("Image uploaded successfully")
+        else:
+            print("Something went wrong when uploading the image")
+    else:
+        print("Something went wrong when uploading the image")
+
+
 def main():
     filter_images(images_URLs)
-
