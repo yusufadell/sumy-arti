@@ -126,42 +126,31 @@ with Image(filename=chosen_image) as img:
     img.crop(*resize[1])
     img.save(filename="assets/images/cropped_2.jpg")
 
-# Overlay text from CAPTION on the image and save.
-with Image(blob=image_blob.content) as canvas:
-    canvas.crop(*resize[0])
-    canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
-                       size=53,
-                       color=Color("white"))
-    caption_width = int(canvas.width / 1.2)
-    margin_left = int((canvas.width - caption_width) / 2)
-    margin_top = int(30)
-    canvas.caption(
-        random.choice(CAPTION),
-        gravity="north",
-        width=caption_width,
-        left=margin_left,
-        top=margin_top,
-    )
-    canvas.format = "jpg"
-    canvas.save(filename="assets/images/text_overlayed_1.jpg")
 
-with Image(blob=image_blob.content) as canvas:
-    canvas.crop(*resize[1])
-    canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
-                       size=53,
-                       color=Color("white"))
-    caption_width = int(canvas.width / 1.2)
-    margin_left = int((canvas.width - caption_width) / 2)
-    margin_top = int(30)
-    canvas.caption(
-        random.choice(CAPTION),
-        gravity="north",
-        width=caption_width,
-        left=margin_left,
-        top=margin_top,
-    )
-    canvas.format = "jpg"
-    canvas.save(filename="assets/images/text_overlayed_2.jpg")
+# Overlay text from CAPTION on the image and save.
+def overlay_text(CAPTION, filename, resize, image_path):
+    with Image(filename=filename) as canvas:
+        canvas.crop(*resize)
+        canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
+                           size=53,
+                           color=Color("white"))
+        caption_width = int(canvas.width / 1.2)
+        margin_left = int((canvas.width - caption_width) / 2)
+        margin_top = int(30)
+        canvas.caption(
+            random.choice(CAPTION),
+            gravity="north",
+            width=caption_width,
+            left=margin_left,
+            top=margin_top,
+        )
+        canvas.format = "jpg"
+        canvas.save(filename=image_path)
+
+
+overlay_text(CAPTION, chosen_image, resize[0], image1_path)  # crop_edges
+overlay_text(CAPTION, chosen_image, resize[1], image2_path)  # crop_top_bottom
+
 
 # TODO: Posting the Story on Instagram manually (not using the API)
 def main():
