@@ -38,7 +38,8 @@ def parse_summerize_article(url):
     summarizer = Summarizer(stemmer)
 
     return [
-        sentence._text for sentence in summarizer(parser.document, SENTENCES_COUNT)
+        sentence._text
+        for sentence in summarizer(parser.document, SENTENCES_COUNT)
     ], list(article.images)
 
 
@@ -130,9 +131,9 @@ with Image(filename=chosen_image) as img:
 def overlay_text(CAPTION, filename, resize, image_path):
     with Image(filename=filename) as canvas:
         canvas.crop(*resize)
-        canvas.font = Font(
-            "assets/fonts/Roboto-Regular.ttf", size=53, color=Color("white")
-        )
+        canvas.font = Font("assets/fonts/Roboto-Regular.ttf",
+                           size=53,
+                           color=Color("white"))
         caption_width = int(canvas.width / 1.2)
         margin_left = int((canvas.width - caption_width) / 2)
         margin_top = int(30)
@@ -169,10 +170,13 @@ def upload_to_instagram(image_path):
         # extract the image id
         image_id = response.json()["data"]["id"]
         # post the image to an account
-        post_url = "https://api.instagram.com/v1/media/{}/comments".format(image_id)
+        post_url = "https://api.instagram.com/v1/media/{}/comments".format(
+            image_id)
         payload = {
-            "access_token": os.environ.get("INSTAGRAM_ACCESS_TOKEN"),
-            "text": "Thank you for reading this article. I hope you enjoyed it. #wired #cygnus #quantum #space #science",
+            "access_token":
+            os.environ.get("INSTAGRAM_ACCESS_TOKEN"),
+            "text":
+            "Thank you for reading this article. I hope you enjoyed it. #wired #cygnus #quantum #space #science",
         }
         response = requests.post(post_url, data=payload)
         if response.status_code == 200:

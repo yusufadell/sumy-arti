@@ -1,5 +1,6 @@
 article_URL = "https://www.wired.com/story/researchers-made-ultracold-quantum-bubbles-on-the-space-station/"
-valid_images = (".jpg", ".gif", ".png", ".tga", ".jpeg", ".PNG", ".JPG", ".JPEG")
+valid_images = (".jpg", ".gif", ".png", ".tga", ".jpeg", ".PNG", ".JPG",
+                ".JPEG")
 tmp_img_path = "./assets/tmp/"
 
 filtered_image_path = "./assets/images/filtered"
