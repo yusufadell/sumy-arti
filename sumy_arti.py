@@ -12,7 +12,8 @@ from wand.font import Font
 from wand.image import Image
 
 from constants import *
-from utils import filter_images, get_highquality_image
+from utils import filter_images
+from utils import get_highquality_image
 
 chosen_image = get_highquality_image()
 
