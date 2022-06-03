@@ -8,6 +8,8 @@ from sumy.summarizers.luhn import LuhnSummarizer as Summarizer
 from wand.color import Color
 from wand.font import Font
 from wand.image import Image
+from constants import *
+from utils import filter_images, get_highquality_image
 
 article_URL = "https://www.wired.com/story/researchers-made-ultracold-quantum-bubbles-on-the-space-station/"
 
@@ -167,3 +169,6 @@ with Image(blob=image_blob.content) as canvas:
     canvas.save(filename="assets/images/text_overlayed_2.jpg")
 
 # TODO: Posting the Story on Instagram manually (not using the API)
+def main():
+    filter_images(images_URLs)
+
