@@ -6,7 +6,7 @@ from newspaper import Article
 from sumy.nlp.stemmers import Stemmer
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.parsers.plaintext import PlaintextParser
-from sumy.summarizers.luhn import LuhnSummarizer as Summarizer
+from sumy.summarizers.lex_rank import LexRankSummarizer as Summarizer
 from wand.color import Color
 from wand.font import Font
 from wand.image import Image
