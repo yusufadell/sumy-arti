@@ -9,6 +9,11 @@ If you have been using Instagram for a while, you might have already seen a lot 
 as a programmer, I feel like it is too much effort to create story images manually for the articles I
 publish. My frustration led me to automate most of the process.
 
+## Preview
+
+![Final Result uploaded to instagram](./assets/images/snapshot1.png)
+![Final Result in detail](./assets/images/snapshot-2.jpg)
+
 ## Installation
 
 Install the requirements with pip:
